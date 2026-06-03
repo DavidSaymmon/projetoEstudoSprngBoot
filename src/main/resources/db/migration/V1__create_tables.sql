@@ -27,8 +27,9 @@ CREATE TABLE user_movie_list (
     PRIMARY KEY (movie_id, user_id),
 
     CONSTRAINT fk_user_movie_list_movie
-        FOREIGN KEY (movie_id) REFERENCES movie(id),
-
+        FOREIGN KEY (movie_id) REFERENCES movie(id)
+    ON DELETE CASCADE,
     CONSTRAINT fk_user_movie_list_user
         FOREIGN KEY (user_id) REFERENCES users(id)
+    ON DELETE CASCADE
 );

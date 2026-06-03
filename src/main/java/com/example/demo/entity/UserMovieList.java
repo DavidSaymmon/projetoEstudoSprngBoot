@@ -13,9 +13,7 @@ import jakarta.persistence.PrePersist;
 @Entity
 public class UserMovieList {
 
-    @EmbeddedId
-    private UserMovieListKey id;
-    
+
     @ManyToOne
     @MapsId("userId")
     @JoinColumn(name = "user_id", nullable = false)
@@ -26,6 +24,21 @@ public class UserMovieList {
     @JoinColumn(name = "movie_id", nullable = false)
     private Movie movie;
 
+    @EmbeddedId
+    private UserMovieListKey id;
+
+    public UserMovieList(User user, Movie movie, UserMovieListKey id) {
+        this.user = user;
+        this.movie = movie;
+        this.id = id;
+    }
+
+    public Movie getMovie() {
+        return movie;
+    }
+
+    public UserMovieList() {
+    }
 
     @Column(nullable = false, updatable = false)
     private LocalDateTime createdAt;

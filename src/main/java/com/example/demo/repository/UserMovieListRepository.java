@@ -4,6 +4,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import com.example.demo.entity.UserMovieList;
 import com.example.demo.entity.UserMovieListKey;
 
-public interface UserMovieListRepository extends JpaRepository<UserMovieList,  UserMovieListKey>{
+import java.util.List;
 
+public interface UserMovieListRepository extends JpaRepository<UserMovieList,  UserMovieListKey>{
+    List<UserMovieList> findByUser_Id(Long id);
 }

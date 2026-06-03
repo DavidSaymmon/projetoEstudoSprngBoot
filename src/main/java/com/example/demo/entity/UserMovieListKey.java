@@ -17,8 +17,16 @@ public class UserMovieListKey implements Serializable{
                Objects.equals(movieId, that.movieId);
     }
 
+    public UserMovieListKey() {
+    }
+
     @Override
     public int hashCode() {
         return Objects.hash(userId, movieId);
+    }
+
+    public UserMovieListKey(Long userId, Long movieId) {
+        this.userId = userId;
+        this.movieId = movieId;
     }
 }

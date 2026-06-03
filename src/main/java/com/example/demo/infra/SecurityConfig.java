@@ -28,7 +28,7 @@ public class SecurityConfig {
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests((authorize -> authorize.requestMatchers(HttpMethod.POST, "/auth/login", "/auth/register").
                 permitAll().requestMatchers("/h2-console/**").//Obs: por ser um projeto de estudos, deixarei o h2-console público.
-                permitAll().requestMatchers(HttpMethod.DELETE, "/user").hasRole("ADMIN").
+                permitAll().requestMatchers(HttpMethod.DELETE, "/user**","/movie/**").hasRole("ADMIN").
                 requestMatchers(HttpMethod.PUT, "/user/**").hasRole("ADMIN").
                 requestMatchers(HttpMethod.POST, "/user", "/movie").hasRole("ADMIN").
                 requestMatchers(HttpMethod.GET, "/user", "/user/**").hasRole("ADMIN").

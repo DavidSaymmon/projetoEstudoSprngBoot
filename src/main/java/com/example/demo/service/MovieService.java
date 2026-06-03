@@ -24,5 +24,10 @@ private final MovieRepository movieRepository;
     public Optional<MovieResponseDTO> getById (Long Id){
         return movieRepository.findById(Id)
         .map(movie->MovieMapper.convertMovieToResponse(movie));
-    }  
+    }
+    public boolean deleteById(Long id){
+        if(!movieRepository.existsById(id)) return false;
+        movieRepository.deleteById(id);
+        return true;
+    }
 }
