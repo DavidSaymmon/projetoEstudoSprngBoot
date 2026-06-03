@@ -99,5 +99,26 @@ public class Movie {
     public Duration getDuration() {
         return duration;
     }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setLanguage(String language) {
+        this.language = language;
+    }
+
+    public void setReleaseDate(LocalDateTime releaseDate) {
+        this.releaseDate = releaseDate;
+    }
+
+    public void setDuration(Duration duration) {
+        this.duration = duration;
+    }
+    
     
 }

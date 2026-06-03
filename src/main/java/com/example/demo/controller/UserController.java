@@ -29,8 +29,8 @@ public class UserController {
     }
     @GetMapping("{id}")
     public ResponseEntity<?> findById(@PathVariable Long id) {
-        Optional<UserResponseDTO> userOpt = userService.findById(id);
-        if (userOpt.isEmpty()) {
+        Optional<UserResponseDTO> user = userService.findById(id);
+        if (!user.isPresent()) {
             return ResponseEntity
                     .status(HttpStatus.NOT_FOUND)
                     .body(Map.of(
@@ -39,7 +39,7 @@ public class UserController {
                             "code", "USER_NOT_FOUND"
                     ));
         }
-        return ResponseEntity.ok(userOpt.get());
+        return ResponseEntity.ok(user.get());
     }
     @PostMapping
     public ResponseEntity<UserResponseDTO> createUser(@Valid @RequestBody RegisterRequestDTO user) {
