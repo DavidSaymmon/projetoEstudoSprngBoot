@@ -68,14 +68,15 @@ public class MovieController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteMovieById(@PathVariable Long id){
+    public ResponseEntity<?> deleteMovieById(@PathVariable Long id) {
         boolean movieWasDeleted = movieService.deleteById(id);
-        if(!movieWasDeleted)
+        if (!movieWasDeleted) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of(
-                "error", "Not_Found",
-                "message", "Movie with ID " + id + " Not Found",
-                "code", "MOVIE_NOT_FOUND"
-        ));
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).body("");
+                    "error", "Not_Found",
+                    "message", "Movie with ID " + id + " Not Found",
+                    "code", "MOVIE_NOT_FOUND"
+            ));
+        }
+        return ResponseEntity.noContent().build();
     }
 }

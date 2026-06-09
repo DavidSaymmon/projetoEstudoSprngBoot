@@ -52,8 +52,10 @@ public class MovieService {
         return Optional.of(MovieMapper.convertMovieToResponse(movieRepository.save(movie)));
     }
 
-    public boolean deleteById(Long id){
-        if(!movieRepository.existsById(id)) return false;
+    public boolean deleteById(Long id) {
+        if (!movieRepository.existsById(id)) {
+            return false;
+        }
         movieRepository.deleteById(id);
         return true;
     }
