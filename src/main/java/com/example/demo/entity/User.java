@@ -101,11 +101,6 @@ public class User{
     public void setPassword(String password) {
         this.password = password;
     }
-    @Override
-    public String toString() {
-        return "User [id=" + id + ", name=" + name + ", email=" + email + ", password=" + password + ", updatedAt="
-                + updatedAt + ", createdAt=" + createdAt + "]";
-    }
     public Role getRole() {
         return role;
     }
