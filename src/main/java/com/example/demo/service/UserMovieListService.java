@@ -1,26 +1,31 @@
 package com.example.demo.service;
 
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.stereotype.Service;
+
+import com.example.demo.dto.MovieResponseDTO;
 import com.example.demo.entity.Movie;
 import com.example.demo.entity.User;
 import com.example.demo.entity.UserMovieList;
 import com.example.demo.entity.UserMovieListKey;
+import com.example.demo.infra.MovieMapper;
 import com.example.demo.repository.MovieRepository;
 import com.example.demo.repository.UserMovieListRepository;
-import lombok.AllArgsConstructor;
-import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
+import lombok.AllArgsConstructor;
 
 @Service
 @AllArgsConstructor
 public class UserMovieListService {
     private final UserMovieListRepository userMovieListRepository;
     private final MovieRepository movieRepository;
-    public List<Movie> getMoviesById(Long id){
+    public List<MovieResponseDTO> getMoviesById(Long id){
         return userMovieListRepository.findByUser_Id(id)
                 .stream()
-                .map(UserMovieList::getMovie).toList();
+                .map(UserMovieList::getMovie)
+                .map(MovieMapper::convertMovieToResponse).toList();
     }
     public Optional<Movie> addMovieToList(User user, Long movieId){
         Optional<Movie> movieOptional = movieRepository.findById(movieId);

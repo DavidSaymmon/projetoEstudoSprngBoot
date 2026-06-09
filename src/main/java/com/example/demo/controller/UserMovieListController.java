@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import com.example.demo.dto.MovieResponseDTO;
 import com.example.demo.entity.Movie;
 import com.example.demo.entity.User;
 import com.example.demo.entity.UserMovieList;
@@ -25,7 +26,7 @@ public class UserMovieListController {
     private final UserMovieListRepository userMovieListRepository;
     private final MovieRepository movieRepository;
     @GetMapping
-    public ResponseEntity<List<Movie>> GetMoviesByUserId(@AuthenticationPrincipal User user){
+    public ResponseEntity<List<MovieResponseDTO>> GetMoviesByUserId(@AuthenticationPrincipal User user){
         return ResponseEntity.ok(userMovieListService.getMoviesById(user.getId()));
     }
     @PostMapping("/{movieId}")
