@@ -42,9 +42,17 @@ public class UserController {
         return ResponseEntity.ok(user.get());
     }
     @PostMapping
-    public ResponseEntity<UserResponseDTO> createUser(@Valid @RequestBody RegisterRequestDTO user) {
-        return ResponseEntity.status(HttpStatus.CREATED).
-                body(this.userService.createUser(user));
+    public ResponseEntity<?> createUser(@Valid @RequestBody RegisterRequestDTO user) {
+        Optional<UserResponseDTO> responseOptional = userService.createUser(user);
+        if(responseOptional.isEmpty()) return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
+            Map.of(
+                "error", "Bad Request",
+                "message", "the email has already being used",
+                "code", "EMAIL_DUPLICATION"
+            )
+        );
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(responseOptional.get());
     }
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteUserById(@PathVariable Long id){
