@@ -5,7 +5,7 @@ CREATE TABLE users (
     password VARCHAR(255) NOT NULL,
     created_at TIMESTAMP(6) NOT NULL,
     updated_at TIMESTAMP(6) NOT NULL,
-    role ENUM('ADMIN', 'USER')
+    role ENUM('ADMIN', 'USER') NOT NULL
 );
 
 CREATE TABLE movie (
@@ -16,7 +16,8 @@ CREATE TABLE movie (
     created_at TIMESTAMP(6) NOT NULL,
     updated_at TIMESTAMP(6) NOT NULL,
     release_date TIMESTAMP(6) NOT NULL,
-    duration NUMERIC(21, 0) NOT NULL
+    duration INTEGER NOT NULL,
+    CONSTRAINT isPositive CHECK (duration>0)
 );
 
 CREATE TABLE user_movie_list (

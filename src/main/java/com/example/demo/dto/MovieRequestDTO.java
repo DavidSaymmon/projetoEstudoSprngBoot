@@ -1,12 +1,12 @@
 package com.example.demo.dto;
 
-import java.time.Duration;
 import java.time.LocalDateTime;
 
 import com.example.demo.enums.Category;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.Size;
 
 public record MovieRequestDTO (
@@ -19,6 +19,6 @@ String name,
 String language,
 @NotNull(message="releaseDate is a mandatory field")
 LocalDateTime releaseDate,
+@Positive
 @NotNull(message="duration is a mandatory field")
-Duration duration) {}
-
+Integer duration) {}

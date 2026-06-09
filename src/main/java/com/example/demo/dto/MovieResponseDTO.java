@@ -1,6 +1,5 @@
 package com.example.demo.dto;
 
-import java.time.Duration;
 import java.time.LocalDateTime;
 
 import com.example.demo.enums.Category;
@@ -13,7 +12,7 @@ public record MovieResponseDTO(
     LocalDateTime releaseDate,
     LocalDateTime createdAt,
     LocalDateTime updatedAt,
-    Duration duration
+    Integer duration
 ) {
 
 }

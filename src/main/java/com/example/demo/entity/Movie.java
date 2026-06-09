@@ -1,6 +1,5 @@
 package com.example.demo.entity;
 
-import java.time.Duration;
 import java.time.LocalDateTime;
 
 import com.example.demo.enums.Category;
@@ -24,14 +23,16 @@ public class Movie {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(updatable = false)
     private Long id;
-
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    @NotNull(message = "a categoria do filme é obrigatória")
+    @NotNull(message = "movie's category is a mandatory field")
     private Category category;
     @Column(nullable = false)
-    @NotBlank(message = "O nome é obrigatório")
+    @NotBlank(message = "movie's name is a mandatory field")
     private String name;
+    @Column(nullable = false)
+    @NotNull(message = "movie's duration is a mandatory field")
+    private Integer duration;
     @Column(nullable = false)
     private String language;
     @Column(nullable = false, updatable = false)
@@ -40,8 +41,6 @@ public class Movie {
     private LocalDateTime updatedAt;
     @Column(nullable = false)
     private LocalDateTime releaseDate;
-    @Column(nullable = false)
-    private Duration duration;
 
     @PrePersist
     public void onCreate() {
@@ -60,7 +59,7 @@ public class Movie {
 
     public Movie(Category category,
             String name, String language, LocalDateTime releaseDate,
-            Duration duration) {
+            Integer duration) {
         this.category = category;
         this.name = name;
         this.language = language;
@@ -96,7 +95,7 @@ public class Movie {
         return releaseDate;
     }
 
-    public Duration getDuration() {
+    public Integer getDuration() {
         return duration;
     }
 
@@ -116,9 +115,7 @@ public class Movie {
         this.releaseDate = releaseDate;
     }
 
-    public void setDuration(Duration duration) {
+    public void setDuration(Integer duration) {
         this.duration = duration;
     }
-    
-    
 }
