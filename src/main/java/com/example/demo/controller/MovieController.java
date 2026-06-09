@@ -50,21 +50,21 @@ public class MovieController {
     }
 
     @GetMapping
-    public ResponseEntity<List<MovieResponseDTO>> getAllMovies(){
+    public ResponseEntity<List<MovieResponseDTO>> getAllMovies() {
         return ResponseEntity.ok(movieService.getAllMovies());
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<?> updateMovie(@PathVariable Long id, @Valid @RequestBody MovieUpdateDTO request){
-        Optional<MovieResponseDTO> movie = movieService.updateMovie(id, request);
-        if(!movie.isPresent()){
+    public ResponseEntity<?> updateMovie(@PathVariable Long id, @Valid @RequestBody MovieUpdateDTO request) {
+        Optional<MovieResponseDTO> movieOptional = movieService.updateMovie(id, request);
+        if (movieOptional.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of(
                     "error", "Not_Found",
                     "message", "Movie with ID " + id + " Not Found",
                     "code", "MOVIE_NOT_FOUND"
-            ));            
+            ));
         }
-        return ResponseEntity.ok(movie.get());
+        return ResponseEntity.ok(movieOptional.get());
     }
 
     @DeleteMapping("/{id}")

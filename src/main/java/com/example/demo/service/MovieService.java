@@ -39,15 +39,16 @@ public class MovieService {
 
     public Optional<MovieResponseDTO> updateMovie(Long id, MovieUpdateDTO request) {
         Optional<Movie> movieOPT = movieRepository.findById(id);
-        if (movieOPT.isEmpty()) {
+        if (movieOPT.isEmpty()) 
             return Optional.empty();
-        }
+
         Movie movie = movieOPT.get();
-        if(request.category()!=null) movie.setCategory(request.category());
-        if(request.name()!=null) movie.setName(request.name());
-        if(request.language()!=null) movie.setLanguage(request.language());
-        if(request.duration()!=null) movie.setDuration(request.duration());
-        if(request.releaseDate()!=null) movie.setReleaseDate(request.releaseDate());
+        if (request.category() != null) movie.setCategory(request.category());
+        if (request.name() != null && !request.name().isBlank()) movie.setName(request.name());
+        if (request.language() != null && !request.language().isBlank()) movie.setLanguage(request.language());
+        if (request.duration() != null) movie.setDuration(request.duration());
+        if (request.releaseDate() != null) movie.setReleaseDate(request.releaseDate());
+        
         return Optional.of(MovieMapper.convertMovieToResponse(movieRepository.save(movie)));
     }
 
