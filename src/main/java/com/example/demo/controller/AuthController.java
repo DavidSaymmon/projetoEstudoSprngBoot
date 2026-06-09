@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import java.util.Map;
+import java.util.Optional;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,8 +27,8 @@ public class AuthController {
 
     @PostMapping("/register")
     public ResponseEntity<?> register(@Valid @RequestBody RegisterRequestDTO request) {
-        AuthResponseDTO response = this.authService.register(request);
-        if (response == null) {
+        Optional<AuthResponseDTO> responseOptional = this.authService.register(request);
+        if (responseOptional.isEmpty()) {
             return ResponseEntity.
                     status(HttpStatus.BAD_REQUEST)
                     .body(Map.of(
@@ -36,13 +37,13 @@ public class AuthController {
                             "code", "BAD REQUEST"
                     ));
         }
-        return ResponseEntity.status(HttpStatus.CREATED).body(response);
+        return ResponseEntity.status(HttpStatus.CREATED).body(responseOptional.get());
     }
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@Valid @RequestBody LoginRequestDTO request) {
-        AuthResponseDTO response = this.authService.login(request);
-        if (response == null) {
+        Optional<AuthResponseDTO> responseOptional = authService.login(request);
+        if (responseOptional.isEmpty()) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of(
                     "error", "Unauthorized",
                     "message", "invalid Credentials",
@@ -50,6 +51,6 @@ public class AuthController {
             )
             );
         }
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(responseOptional.get());
     }
 }

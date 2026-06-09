@@ -4,11 +4,8 @@ import com.example.demo.dto.AuthResponseDTO;
 import com.example.demo.dto.RegisterRequestDTO;
 import com.example.demo.dto.UserResponseDTO;
 import com.example.demo.entity.User;
-import com.example.demo.service.JwtService;
 
 public class UserMapper {
-private static final JwtService jwtService = new JwtService();
-    
     public static UserResponseDTO convertToResponseDTO(User user) {
         
         return new UserResponseDTO(
@@ -28,9 +25,9 @@ private static final JwtService jwtService = new JwtService();
                 request.password()
         );
     }
-    public static AuthResponseDTO toAuthResponse(User user) {
+    public static AuthResponseDTO toAuthResponse(User user, String token) {
         return new AuthResponseDTO(
-                jwtService.generateToken(user),
+                token,
                 convertToResponseDTO(user)
         );
     }

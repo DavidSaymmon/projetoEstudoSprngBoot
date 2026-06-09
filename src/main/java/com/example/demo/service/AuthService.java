@@ -1,5 +1,8 @@
 package com.example.demo.service;
 
+import java.util.Optional;
+
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -16,19 +19,30 @@ import lombok.AllArgsConstructor;
 public class AuthService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder; 
-
-    public AuthResponseDTO register (RegisterRequestDTO request){
+    private final JwtService jwtService;
+    public Optional<AuthResponseDTO> register (RegisterRequestDTO request){
         if(userRepository.existsByEmail(request.email()))
-            return null;
-        User user = UserMapper.convertRequestToUser(request);
-        user.setPassword(passwordEncoder.encode(request.password()));
-        userRepository.save(user);
-        return UserMapper.toAuthResponse(user);
+            return Optional.empty();
+        try{   
+            User user = UserMapper.convertRequestToUser(request);
+            user.setPassword(passwordEncoder.encode(request.password()));
+            userRepository.save(user);
+            return Optional.of(UserMapper.toAuthResponse(user, jwtService.generateToken(user)));
+        }
+        catch(DataIntegrityViolationException e){
+            return Optional.empty();
+        }
     }
-    public AuthResponseDTO login(LoginRequestDTO request){
+    public Optional<AuthResponseDTO> login(LoginRequestDTO request){
         User user = userRepository.findByEmail(request.email()).orElse(null);                
         if(user == null || !passwordEncoder.matches(request.password(), user.getPassword()))
-            return null;
-        return UserMapper.toAuthResponse(user);
+            return Optional.empty();
+        return Optional.of(UserMapper.toAuthResponse(user, jwtService.generateToken(user)));
     }
 }
+/*
+Anotações de Estudo:
+    usei um retorno de Optional vazio para lidar com casos normais de tentativa de uso de e-mail duplicado
+    e um try catch para lidar com condições de corrida, ex:
+    múltiplos cliques num botão de registro num front mal formulado.
+ */
